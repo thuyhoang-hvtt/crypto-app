@@ -21,7 +21,7 @@ class Blockchain {
     this.chain.push(newBlock);
   }
 
-  replaceChain(chain, validateTransaction, onSuccess) {
+  replaceChain(chain, validateTransactions, onSuccess) {
     if (chain.lenth <= this.chain.length) {
       console.error('The incoming chain must be longer');
       return;
@@ -32,7 +32,7 @@ class Blockchain {
       return;
     }
 
-    if (validateTransactions && !this.validateTransactionData({ chain })) {
+    if (validateTransactions && !this.validTransactionData({ chain })) {
       console.error('The incoming chain has invalid data');
       return;
     }
@@ -49,7 +49,7 @@ class Blockchain {
       let rewardTransactionCount = 0;
 
       for (let transaction of block.data) {
-        if (trannsaction.input.address === REWARD_INPUT.address) {
+        if (transaction.input.address === REWARD_INPUT.address) {
           rewardTransactionCount += 1;
 
           if (rewardTransactionCount > 1) {
@@ -79,6 +79,11 @@ class Blockchain {
             console.error('An indentical transactionn appears more than once in the block');
             return false;
           }
+
+          if (transactionSet.has(transaction)) {
+            console.error('An identical transaction appears more than once in the block');
+            return false;
+          }
           else {
             transactionSet.add(transaction);
           }
@@ -94,7 +99,7 @@ class Blockchain {
       return false;
     }
 
-    for (let i = 1; i < chain.lenngth; i++) {
+    for (let i = 1; i < chain.length; i++) {
       const { timestamp, lastHash, hash, nonce, difficulty, data } = chain[i];
       const actualLastHash = chain[i-1].hash;
       const lastDifficulty = chain[i-1].difficulty;
@@ -105,7 +110,7 @@ class Blockchain {
 
       if (hash !== validateHash) return false;
 
-      if (Math.abs(lastDiffivulty - difficulty) > 1) return false;
+      if (Math.abs(lastDifficulty - difficulty) > 1) return false;
     }
 
     return true;
