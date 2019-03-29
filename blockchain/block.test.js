@@ -1,5 +1,5 @@
 const Block = require('./block');
-const GENESIS_DATA = require('../config');
+const {GENESIS_DATA} = require('../config');
 
 describe('Block', () => {
   const hash = 'foo-hash';
@@ -50,7 +50,7 @@ describe('Block', () => {
     });
 
     it('sets the `lastHash` to be the `hash` of the lastBlock', () => {
-      expect(minedBlock.lashHash).toEqual(lastBlock.hash);
+      expect(minedBlock.lastHash).toEqual(lastBlock.hash);
     });
 
     it('sets the `data`', () => {

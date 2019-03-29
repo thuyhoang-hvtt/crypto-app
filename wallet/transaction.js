@@ -1,6 +1,6 @@
 const uuid = require('uuid/v1');
 const { verifySignature } = require('../util');
-const { REWARD_INPUT, MINING_REWARD} = require('../config');
+const { REWARD_INPUT, MINING_REWARD } = require('../config');
 
 class Transaction {
   constructor({ senderWallet, recipient, amount, outputMap, input }) {
@@ -29,7 +29,7 @@ class Transaction {
 
   update({ senderWallet, recipient, amount }) {
     if (amount > this.outputMap[senderWallet.publicKey]) {
-      throw new Error('Amounnt exceeds balance..');
+      throw new Error('Amount exceeds balance..');
     }
 
     if (!this.outputMap[recipient]) {
@@ -74,3 +74,4 @@ class Transaction {
 }
 
 module.exports = Transaction;
+
