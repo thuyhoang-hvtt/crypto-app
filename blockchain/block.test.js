@@ -3,26 +3,26 @@ const GENESIS_DATA = require('../config');
 
 describe('Block', () => {
   const hash = 'foo-hash';
-  const lashHash = 'bar-hash';
+  const lastHash = 'bar-hash';
   const data = ['data', 'anotherdata', 'etc'];
   const timestamp = 'a-data';
   const nonce = 1;
   const difficulty = 1;
   const block = new Block(
     {
-      data,
       hash,
-      lashHash,
+      lastHash,
+      data,
       timestamp,
       nonce,
       difficulty
     }
   );
 
-  it('has a hash, lashHash, data and, timestamp property', () => {
+  it('has a hash, lastHash, data and, timestamp property', () => {
     expect(block.timestamp).toEqual(timestamp);
     expect(block.hash).toEqual(hash);
-    expect(block.lashHash).toEqual(lashHash); 
+    expect(block.lastHash).toEqual(lastHash); 
     expect(block.data).toEqual(data);
     expect(block.nonce).toEqual(nonce);
     expect(block.difficulty).toEqual(difficulty);
